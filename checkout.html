@@ -265,7 +265,7 @@
   const hoy=new Date(); hoy.setDate(hoy.getDate()+5);
   if(fechaElem) fechaElem.textContent=`${hoy.getDate()} de ${meses[hoy.getMonth()]}`;
 
-  /* ---------- Finalizar Pedido solo tarjeta + webhook Zapier ---------- */
+  /* ---------- FINALIZAR PEDIDO: Stripe Token -> pagos.php -> Zapier ---------- */
   async function finalizarPedido(){
     const btn = document.querySelector('.btn-finalizar');
     const original = btn.textContent;
@@ -299,39 +299,79 @@
     }
 
     let exito = false;
-    let paymentMethodId = null;
+    let stripeChargeId = null;
+    let tokenId = null;
 
-    // Pago con tarjeta
+    // 1) Crear TOKEN en Stripe (no PaymentMethod)
     if(!window.Stripe || !stripe || !cardElement){
       document.getElementById('card-errors').textContent = 'Pago con tarjeta no disponible en este momento.';
-      exito = false;
     } else {
       try{
-        const {paymentMethod, error} = await stripe.createPaymentMethod({
-          type:'card',
-          card:cardElement,
-          billing_details:{ name:nombre, email }
+        const {token, error} = await stripe.createToken(cardElement, {
+          name: nombre,
+          email: email
         });
 
         if(error){
           document.getElementById('card-errors').textContent = error.message || 'Error procesando la tarjeta.';
-          throw new Error('pm_failed');
+          throw new Error('token_failed');
         }
 
-        console.info('PaymentMethod creado:', paymentMethod.id);
-        paymentMethodId = paymentMethod.id;   // 👈 IMPORTANTE: guardar el pm_...
-        // Aquí normalmente llamarías a tu backend para confirmar el pago (PaymentIntent)
+        tokenId = token.id;
+        console.info('Stripe token creado:', tokenId);
+
+        // 2) Llamar a tu pagos.php para ejecutar el cobro real
+        const endpoint = 'https://imanager.es/recursos/pagos.php';
+
+        const payload = {
+          token: tokenId,
+          amount: Math.round(precio * 100), // en centavos: 34.99 -> 3499
+          email: email,
+          nombre: nombre,
+          telefono: telefono,
+          direccion: direccion,
+          provincia: provincia,
+          codigo_postal: codigo_postal,
+          producto: producto
+        };
+
+        const resPago = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        let data = null;
+        try {
+          data = await resPago.json();
+        } catch(e) {
+          console.warn('Respuesta de pagos.php no es JSON parseable.', e);
+        }
+
+        // Tu PHP devuelve: { success: true, id: "ch_xxx" } en éxito
+        if (!resPago.ok || !data || !data.success) {
+          const mensaje = (data && (data.error || data.message)) || 'Error al procesar el cobro.';
+          document.getElementById('card-errors').textContent = mensaje;
+          throw new Error(mensaje);
+        }
+
+        stripeChargeId = data.id || null;
         exito = true;
 
       }catch(err){
-        if(err?.message!=='pm_failed'){
-          document.getElementById('card-errors').textContent='Error inesperado con la tarjeta.';
+        if(err?.message!=='token_failed'){
+          console.warn('Error en el flujo de pago:', err);
+          if(!document.getElementById('card-errors').textContent){
+            document.getElementById('card-errors').textContent='No se pudo completar el pago. Inténtalo de nuevo.';
+          }
         }
         exito = false;
       }
     }
 
-    // Enviar datos al webhook de Zapier después del OK de Stripe
+    // 3) Si el cobro fue OK, mandar los datos al webhook de Zapier
     if(exito){
       try {
         const baseUrl = 'https://hooks.zapier.com/hooks/catch/20702921/uwob0ku/';
@@ -345,12 +385,15 @@
           '&producto='       + encodeURIComponent(producto)      +
           '&precio='         + encodeURIComponent(precio.toFixed(2)) +
           '&metodo_pago='    + encodeURIComponent(metodo_pago)   +
-          (paymentMethodId 
-            ? '&payment_method_id=' + encodeURIComponent(paymentMethodId)
+          (tokenId 
+            ? '&stripe_token=' + encodeURIComponent(tokenId)
+            : ''
+          ) +
+          (stripeChargeId
+            ? '&stripe_charge_id=' + encodeURIComponent(stripeChargeId)
             : ''
           );
 
-        // GET + no-cors (como pediste)
         fetch(baseUrl + '?' + params, {
           method: 'POST',
           mode: 'no-cors'
@@ -360,7 +403,7 @@
       }
     }
 
-    // Mostrar gracias + tracking solo si exito
+    // 4) Mostrar gracias + tracking solo si exito
     if(exito){
       try {
         fbq('track','Purchase',{
@@ -387,6 +430,8 @@
 
   window.finalizarPedido = finalizarPedido;
 </script>
+
+
 
   <!-- Hotjar -->
   <script>
