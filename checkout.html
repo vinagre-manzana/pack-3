@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <script src="https://js.stripe.com/v3/"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
+  <title>Checkout - SUP Gummies Vinagre de Manzana</title>
+  <style>
+    :root{
+      --color-principal: #e0c410;
+      --color-secundario: #e0c410;
+      --color-boton:#d97037;
+      --color-texto:#222;
+      --focus-ring:0 0 0 3px rgba(13,110,253,.25);
+    }
+    html{font-size:17px;}
+    @media (min-width:1200px){html{font-size:18px;}}
+
+    *{box-sizing:border-box;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+    body{margin:0;background:#f8faf9;color:var(--color-texto);line-height:1.55}
+
+    .container{
+      display:grid;
+      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+      gap:2rem;max-width:1200px;margin:auto;align-items:start;
+    }
+    @media (max-width:900px){.container{grid-template-columns:1fr;padding-bottom:2rem}}
+
+    h1,h2,h3{margin:0 0 .75rem}
+    h2{color:var(--color-secundario)}
+
+    .form-section,.resumen-producto{
+      background:#fff;border-radius:14px;padding:2rem;
+      box-shadow:0 8px 24px rgba(0,0,0,.06)
+    }
+
+    input,select,textarea{
+      width:100%;padding:.9rem .95rem;margin:.4rem 0 1rem;border:1px solid #d9d9d9;border-radius:10px;
+      background:#fff;font-size:1rem;transition:box-shadow .2s,border-color .2s
+    }
+    input:focus,select:focus,textarea:focus{
+      outline:none;border-color:var(--color-secundario);box-shadow:var(--focus-ring)
+    }
+    .sr-only{
+      position:absolute!important;height:1px;width:1px;overflow:hidden;
+      clip:rect(1px,1px,1px,1px);white-space:nowrap
+    }
+
+    .form-section h3{margin-top:1.25rem}
+    .metodo-pago{
+      background:#eef1ea;border-left:4px solid var(--color-secundario);
+      padding:1rem;border-radius:10px;margin-top:1rem;font-size:.95rem
+    }
+
+    .btn-finalizar{
+      width:100%;border:none;border-radius:10px;background:var(--color-boton);color:#fff;
+      padding:1.05rem;font-size:1.1rem;font-weight:800;margin-top:1.2rem;cursor:pointer;
+      transition:filter .2s,transform .05s
+    }
+    .btn-finalizar:hover{filter:brightness(.96)}
+    .btn-finalizar:active{transform:translateY(1px)}
+    .btn-finalizar[disabled]{opacity:.6;cursor:not-allowed}
+
+    .detalle-precio{margin-top:.75rem;font-size:1.05rem}
+    .detalle-precio .envio-gratis{color:#2e7d32;font-weight:700;margin-left:.25rem}
+
+    .card-errors{color:#e74c3c;font-size:.9rem;margin-top:6px;min-height:1.2em}
+
+    .resumen-producto{text-align:center;position:sticky;top:24px}
+    @media (max-width:900px){.resumen-producto{position:static}}
+
+    .resumen-producto img{
+      width:100%;max-width:320px;aspect-ratio:1/1;object-fit:contain;object-position:center;
+      border:1px solid #ececec;border-radius:12px;background:#fff;
+      box-shadow:0 6px 16px rgba(0,0,0,.06);
+      transition:transform .25s,box-shadow .25s
+    }
+    .resumen-producto img:hover{
+      transform:scale(1.04);box-shadow:0 12px 30px rgba(0,0,0,.12)
+    }
+
+    .llegada{text-align:center;margin:12px 0 0}
+    .icons{display:flex;justify-content:center;gap:40px;font-size:28px}
+    .icons i{color:#111;transition:color .3s}
+    .icons i.active{color:var(--color-secundario)}
+    .info{margin-top:10px;font-size:1rem}
+
+    .input-help{color:#c0392b;font-size:.9rem;margin-top:-.35rem;margin-bottom:.5rem;display:none}
+
+    @media (prefers-reduced-motion:reduce){
+      *{transition:none!important;animation:none!important}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Formulario -->
+    <div class="form-section">
+      <div id="formulario">
+        <h2>Información de contacto</h2>
+
+        <label class="sr-only" for="nombre">Nombre</label>
+        <input id="nombre" type="text" placeholder="Nombre" required autocomplete="name" aria-required="true">
+
+        <label class="sr-only" for="telefono">Teléfono</label>
+        <input id="telefono" type="tel" placeholder="+34XXXXXXXXX" inputmode="numeric" required autocomplete="tel" aria-required="true">
+        <div id="telefono-help" class="input-help">Teléfono español con prefijo +34 y 9 dígitos.</div>
+
+        <label class="sr-only" for="email">Correo electrónico</label>
+        <input id="email" type="email" placeholder="Correo electrónico" required autocomplete="email" aria-required="true">
+
+        <label class="sr-only" for="direccion">Dirección</label>
+        <input
+          id="direccion"
+          type="text"
+          placeholder="Dirección completa (Portal, Piso, Puerta...)"
+          required
+          autocomplete="street-address"
+          aria-required="true"
+        />
+
+        <label class="sr-only" for="provincia">Provincia</label>
+        <input id="provincia" type="text" placeholder="Estado / Provincia" required autocomplete="address-level1" aria-required="true">
+
+        <label class="sr-only" for="codigo_postal">Código Postal</label>
+        <input id="codigo_postal" type="text" placeholder="Código postal" required inputmode="numeric" autocomplete="postal-code" aria-required="true">
+
+        <h3>Método de pago</h3>
+        <div class="metodo-pago">
+          <p><strong>Pago con tarjeta (Stripe)</strong></p>
+          <p>Al finalizar, procesaremos tu pago de forma segura con tarjeta a través de Stripe.</p>
+          <div id="card-element" style="margin:10px 0;"></div>
+          <div id="card-errors" class="card-errors" role="alert" aria-live="polite"></div>
+          <img src="https://imanagers.es/recursos/proteccion.webp" style="width:100%;margin-top:10px" alt="Pago protegido">
+          <img src="https://imanagers.es/recursos/garantia.webp" style="width:100%" alt="Garantía de satisfacción">
+        </div>
+
+        <h3>Detalles del pedido</h3>
+        <p id="nombre_producto"><strong>SUP Gummies de Vinagre de Manzana – 3 botes</strong></p>
+        <p>Cada pedido incluye <strong>3 botes</strong> de gummies de vinagre de manzana con delicioso sabor manzana.</p>
+
+        <div class="detalle-precio">
+          Precio total: 
+          <strong id="precio_producto" data-precio-numerico="34.99">34,99</strong>€
+          <span class="envio-gratis">Envío gratuito</span>
+        </div>
+        <p>Cantidad: <strong>3 botes</strong></p>
+
+        <button class="btn-finalizar" onclick="finalizarPedido()">Pagar ahora con tarjeta</button>
+      </div>
+
+      <!-- Gracias -->
+      <div class="gracias-section" id="gracias" aria-live="polite" style="display:none;text-align:center">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Yes_Check_Circle.svg/1024px-Yes_Check_Circle.svg.png" alt="Confirmación" width="64" height="64">
+        <h2>¡Gracias por tu Compra!</h2>
+        <p>Tu pago con tarjeta se ha procesado correctamente.</p>
+        <p><strong>Fecha de Entrega:</strong> Aproximadamente en 5 días hábiles desde hoy.</p>
+        <p>Te enviaremos un <strong>WhatsApp</strong> para confirmar tu pedido y verificar la información de envío.</p>
+        <p>Si no respondes al WhatsApp, te llamaremos.</p>
+      </div>
+    </div>
+
+    <!-- Resumen producto -->
+    <div class="resumen-producto">
+      <h2>Compra ahora con pago seguro</h2>
+      <img
+        src="https://almacen.coinnecta.es/storage/products/2123/MANZANAANTIGUA_1766318916.jpg"
+        alt="SUP Gummies de Vinagre de Manzana – 3 botes"
+        loading="lazy"
+        decoding="async"
+      >
+      <p style="font-size:1.05rem;"><strong>SUP Gummies de Vinagre de Manzana – 3 botes</strong></p>
+      <p style="font-size:1.05rem;">Precio total: <strong>34,99 €</strong></p>
+      <p style="font-size:1.05rem;">Envío: <strong>GRATIS</strong></p>
+
+      <section class="llegada">
+        <div class="icons">
+          <i class="fas fa-box" id="icon1" aria-hidden="true"></i>
+          <i class="fas fa-truck" id="icon2" aria-hidden="true"></i>
+          <i class="fas fa-check-circle" id="icon3" aria-hidden="true"></i>
+        </div>
+        <div class="info">
+          Fecha estimada: <span id="fecha"></span><br>
+          Envío por Correos Express - <span id="location">España</span>
+        </div>
+      </section>
+    </div>
+  </div>
+
+<script>
+  /* ---------- Stripe (inicialización segura) ---------- */
+  let stripe, elements, cardElement;
+  (function initStripeSafe(){
+    if (!window.Stripe) {
+      console.warn('Stripe.js no disponible (bloqueado o sin cargar).');
+      return;
+    }
+    try{
+      stripe = Stripe("pk_live_51QsNOhKu0tXWuaVKuCAlJG1AHAGAISN9Onzm9eQW6PtrxQnF0F5HD79c5bFJs9wz5ZMCRtKJS8OBNKiAdNKgRrOb00RA7ogf0b");
+      elements = stripe.elements();
+      cardElement = elements.create('card', {
+        style:{
+          base:{fontSize:'16px',color:'#32325d','::placeholder':{color:'#aab7c4'}},
+          invalid:{color:'#fa755a',iconColor:'#fa755a'}
+        }
+      });
+      cardElement.mount('#card-element');
+    }catch(e){
+      console.warn('Error inicializando Stripe Elements:', e);
+    }
+  })();
+
+  const qs  = (s,p=document)=>p.querySelector(s);
+
+  /* Teléfono +34 con saneo y validación */
+  const telInput = document.getElementById('telefono');
+  const telHelp  = document.getElementById('telefono-help');
+  const PREFIX = '+34';
+  function showTelError(msg){telHelp.textContent=msg;telHelp.style.display='block'}
+  function hideTelError(){telHelp.style.display='none'}
+  function sanitizePhone(v){
+    v=String(v||'').replace(/\s+/g,'');
+    if(v.startsWith('+')) v='+'+v.slice(1).replace(/\D+/g,''); else v=v.replace(/\D+/g,'');
+    if(!v.startsWith(PREFIX)) v=PREFIX+v.replace(/^\+?34/,'');
+    return v;
+  }
+  function validSpanishMobile(v){return /^\+34\d{9}$/.test(String(v||''))}
+  telInput.value = PREFIX; hideTelError();
+  telInput.addEventListener('focus',()=>{if(!telInput.value||telInput.value==='+') telInput.value=PREFIX});
+  telInput.addEventListener('beforeinput',e=>{
+    const selStart=telInput.selectionStart;
+    const del=(e.inputType==='deleteContentBackward'||e.inputType==='deleteContentForward');
+    if(del&&selStart<=PREFIX.length){e.preventDefault();showTelError('Solo teléfonos españoles (+34) con 9 dígitos.')}
+  });
+  telInput.addEventListener('input',()=>{
+    const prev=telInput.value, sanitized=sanitizePhone(prev);
+    if(prev!==sanitized){
+      const pos=telInput.selectionStart; telInput.value=sanitized;
+      if(pos<PREFIX.length) telInput.setSelectionRange(PREFIX.length,PREFIX.length);
+    }
+    if(telInput.value.length>PREFIX.length&&!validSpanishMobile(telInput.value)){
+      showTelError('Formato esperado: +34 y 9 dígitos. Ej: +34961111222');
+    } else hideTelError();
+  });
+  telInput.addEventListener('blur',()=>{
+    if(telInput.value===PREFIX){showTelError('Introduce tu número español con 9 dígitos tras +34.')}
+    else if(!validSpanishMobile(telInput.value)){showTelError('Teléfono inválido: +34 y 9 dígitos.')}
+    else hideTelError();
+  });
+
+  // Animación iconos envío
+  const icons=[document.getElementById('icon1'),document.getElementById('icon2'),document.getElementById('icon3')];
+  let indexIcon=0;
+  setInterval(()=>{
+    icons.forEach(i=>i&&i.classList.remove('active'));
+    if(icons[indexIcon]) icons[indexIcon].classList.add('active');
+    indexIcon=(indexIcon+1)%icons.length;
+  },1000);
+
+  // Fecha estimada hoy+5
+  const fechaElem=document.getElementById('fecha');
+  const meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const hoy=new Date(); hoy.setDate(hoy.getDate()+5);
+  if(fechaElem) fechaElem.textContent=`${hoy.getDate()} de ${meses[hoy.getMonth()]}`;
+
+  /* ---------- Finalizar Pedido solo tarjeta + webhook Zapier ---------- */
+  async function finalizarPedido(){
+    const btn = document.querySelector('.btn-finalizar');
+    const original = btn.textContent;
+    btn.disabled = true; btn.textContent='Procesando...';
+
+    const nombre = qs('#nombre').value.trim();
+    const telefono = qs('#telefono').value.trim();
+    const email = qs('#email').value.trim();
+    const direccion = qs('#direccion').value.trim();
+    const provincia = qs('#provincia').value.trim();
+    const codigo_postal = qs('#codigo_postal').value.trim();
+    const producto = qs('#nombre_producto').textContent;
+    const precioEl = document.getElementById('precio_producto');
+    const precio = parseFloat(precioEl.dataset.precioNumerico || '34.99') || 34.99;
+    const metodo_pago = 'tarjeta';
+
+    // Validaciones básicas
+    if(!nombre || !email || !direccion || !provincia || !codigo_postal){
+      alert('Por favor completa todos los campos.');
+      btn.disabled=false; btn.textContent=original; return;
+    }
+    if(!validSpanishMobile(telefono)){
+      showTelError('Solo teléfonos españoles (+34 y 9 dígitos).');
+      alert('Teléfono inválido. Debe empezar por +34 y tener 9 dígitos.');
+      btn.disabled=false; btn.textContent=original; return;
+    }
+
+    let exito = false;
+
+    // Pago con tarjeta
+    if(!window.Stripe || !stripe || !cardElement){
+      document.getElementById('card-errors').textContent = 'Pago con tarjeta no disponible en este momento.';
+      exito = false;
+    } else {
+      try{
+        const {paymentMethod, error} = await stripe.createPaymentMethod({
+          type:'card',
+          card:cardElement,
+          billing_details:{name:nombre,email}
+        });
+        if(error){
+          document.getElementById('card-errors').textContent = error.message || 'Error procesando la tarjeta.';
+          throw new Error('pm_failed');
+        }
+        console.info('PaymentMethod creado:', paymentMethod.id);
+        // Aquí normalmente llamarías a tu backend para confirmar el pago (PaymentIntent)
+        exito = true;
+      }catch(err){
+        if(err?.message!=='pm_failed'){
+          document.getElementById('card-errors').textContent='Error inesperado con la tarjeta.';
+        }
+        exito = false;
+      }
+    }
+
+    // Enviar datos al webhook de Zapier después del cobro (o del OK de Stripe)
+    if(exito){
+      try {
+        const baseUrl = 'https://hooks.zapier.com/hooks/catch/20702921/uwob0ku/';
+        const params = 
+          'nombre='        + encodeURIComponent(nombre) +
+          '&telefono='     + encodeURIComponent(telefono) +
+          '&email='        + encodeURIComponent(email) +
+          '&direccion='    + encodeURIComponent(direccion) +
+          '&provincia='    + encodeURIComponent(provincia) +
+          '&codigo_postal='+ encodeURIComponent(codigo_postal) +
+          '&producto='     + encodeURIComponent(producto) +
+          '&precio='       + encodeURIComponent(precio.toFixed(2)) +
+          '&metodo_pago='  + encodeURIComponent(metodo_pago);
+
+        fetch(baseUrl + '?' + params, {
+          method: 'POST',
+          mode: 'no-cors'
+        });
+      } catch(e){
+        console.warn('Error enviando datos a Zapier:', e);
+      }
+    }
+
+    // Mostrar gracias + tracking solo si exito
+    if(exito){
+      try {
+        fbq('track','Purchase',{
+          value: precio,
+          currency: 'EUR',
+          content_name: producto,
+          content_type: 'product',
+          contents: [{ id: producto, quantity: 1, item_price: precio }]
+        });
+      } catch(e){ console.warn('FB Purchase tracking error', e); }
+
+      document.getElementById('formulario').style.display='none';
+      const gracias = document.getElementById('gracias');
+      gracias.style.display='block';
+    } else {
+      alert('No se pudo completar el pago. Revisa los datos e inténtalo de nuevo.');
+    }
+
+    setTimeout(()=>{btn.disabled=false;btn.textContent=original;},1200);
+  }
+
+  window.finalizarPedido = finalizarPedido;
+</script>
+
+  <!-- Hotjar -->
+  <script>
+    (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)}
+      ;h._hjSettings={hjid:6388392,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+  </script>
+
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','1142663291345671'); fbq('track','InitiateCheckout');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1142663291345671&ev=PageView&noscript=1"></noscript>
+</body>
+</html>
