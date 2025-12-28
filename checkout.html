@@ -269,31 +269,37 @@
   async function finalizarPedido(){
     const btn = document.querySelector('.btn-finalizar');
     const original = btn.textContent;
-    btn.disabled = true; btn.textContent='Procesando...';
+    btn.disabled = true; 
+    btn.textContent='Procesando...';
 
-    const nombre = qs('#nombre').value.trim();
-    const telefono = qs('#telefono').value.trim();
-    const email = qs('#email').value.trim();
-    const direccion = qs('#direccion').value.trim();
-    const provincia = qs('#provincia').value.trim();
+    const nombre        = qs('#nombre').value.trim();
+    const telefono      = qs('#telefono').value.trim();
+    const email         = qs('#email').value.trim();
+    const direccion     = qs('#direccion').value.trim();
+    const provincia     = qs('#provincia').value.trim();
     const codigo_postal = qs('#codigo_postal').value.trim();
-    const producto = qs('#nombre_producto').textContent;
-    const precioEl = document.getElementById('precio_producto');
-    const precio = parseFloat(precioEl.dataset.precioNumerico || '34.99') || 34.99;
-    const metodo_pago = 'tarjeta';
+    const producto      = qs('#nombre_producto').textContent;
+    const precioEl      = document.getElementById('precio_producto');
+    const precio        = parseFloat(precioEl.dataset.precioNumerico || '34.99') || 34.99;
+    const metodo_pago   = 'tarjeta';
 
     // Validaciones básicas
     if(!nombre || !email || !direccion || !provincia || !codigo_postal){
       alert('Por favor completa todos los campos.');
-      btn.disabled=false; btn.textContent=original; return;
+      btn.disabled=false; 
+      btn.textContent=original; 
+      return;
     }
     if(!validSpanishMobile(telefono)){
       showTelError('Solo teléfonos españoles (+34 y 9 dígitos).');
       alert('Teléfono inválido. Debe empezar por +34 y tener 9 dígitos.');
-      btn.disabled=false; btn.textContent=original; return;
+      btn.disabled=false; 
+      btn.textContent=original; 
+      return;
     }
 
     let exito = false;
+    let paymentMethodId = null;
 
     // Pago con tarjeta
     if(!window.Stripe || !stripe || !cardElement){
@@ -304,15 +310,19 @@
         const {paymentMethod, error} = await stripe.createPaymentMethod({
           type:'card',
           card:cardElement,
-          billing_details:{name:nombre,email}
+          billing_details:{ name:nombre, email }
         });
+
         if(error){
           document.getElementById('card-errors').textContent = error.message || 'Error procesando la tarjeta.';
           throw new Error('pm_failed');
         }
+
         console.info('PaymentMethod creado:', paymentMethod.id);
+        paymentMethodId = paymentMethod.id;   // 👈 IMPORTANTE: guardar el pm_...
         // Aquí normalmente llamarías a tu backend para confirmar el pago (PaymentIntent)
         exito = true;
+
       }catch(err){
         if(err?.message!=='pm_failed'){
           document.getElementById('card-errors').textContent='Error inesperado con la tarjeta.';
@@ -321,21 +331,26 @@
       }
     }
 
-    // Enviar datos al webhook de Zapier después del cobro (o del OK de Stripe)
+    // Enviar datos al webhook de Zapier después del OK de Stripe
     if(exito){
       try {
         const baseUrl = 'https://hooks.zapier.com/hooks/catch/20702921/uwob0ku/';
-        const params = 
-          'nombre='        + encodeURIComponent(nombre) +
-          '&telefono='     + encodeURIComponent(telefono) +
-          '&email='        + encodeURIComponent(email) +
-          '&direccion='    + encodeURIComponent(direccion) +
-          '&provincia='    + encodeURIComponent(provincia) +
-          '&codigo_postal='+ encodeURIComponent(codigo_postal) +
-          '&producto='     + encodeURIComponent(producto) +
-          '&precio='       + encodeURIComponent(precio.toFixed(2)) +
-          '&metodo_pago='  + encodeURIComponent(metodo_pago);
+        const params =
+          'nombre='          + encodeURIComponent(nombre)        +
+          '&telefono='       + encodeURIComponent(telefono)      +
+          '&email='          + encodeURIComponent(email)         +
+          '&direccion='      + encodeURIComponent(direccion)     +
+          '&provincia='      + encodeURIComponent(provincia)     +
+          '&codigo_postal='  + encodeURIComponent(codigo_postal) +
+          '&producto='       + encodeURIComponent(producto)      +
+          '&precio='         + encodeURIComponent(precio.toFixed(2)) +
+          '&metodo_pago='    + encodeURIComponent(metodo_pago)   +
+          (paymentMethodId 
+            ? '&payment_method_id=' + encodeURIComponent(paymentMethodId)
+            : ''
+          );
 
+        // GET + no-cors (como pediste)
         fetch(baseUrl + '?' + params, {
           method: 'POST',
           mode: 'no-cors'
@@ -364,7 +379,10 @@
       alert('No se pudo completar el pago. Revisa los datos e inténtalo de nuevo.');
     }
 
-    setTimeout(()=>{btn.disabled=false;btn.textContent=original;},1200);
+    setTimeout(()=>{
+      btn.disabled=false;
+      btn.textContent=original;
+    },1200);
   }
 
   window.finalizarPedido = finalizarPedido;
