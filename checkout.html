@@ -190,82 +190,6 @@
   </div>
 
 <script>
-  /* ---------- Stripe (inicialización segura) ---------- */
-  let stripe, elements, cardElement;
-  (function initStripeSafe(){
-    if (!window.Stripe) {
-      console.warn('Stripe.js no disponible (bloqueado o sin cargar).');
-      return;
-    }
-    try{
-      stripe = Stripe("pk_live_51QsNOhKu0tXWuaVKuCAlJG1AHAGAISN9Onzm9eQW6PtrxQnF0F5HD79c5bFJs9wz5ZMCRtKJS8OBNKiAdNKgRrOb00RA7ogf0b");
-      elements = stripe.elements();
-      cardElement = elements.create('card', {
-        style:{
-          base:{fontSize:'16px',color:'#32325d','::placeholder':{color:'#aab7c4'}},
-          invalid:{color:'#fa755a',iconColor:'#fa755a'}
-        }
-      });
-      cardElement.mount('#card-element');
-    }catch(e){
-      console.warn('Error inicializando Stripe Elements:', e);
-    }
-  })();
-
-  const qs  = (s,p=document)=>p.querySelector(s);
-
-  /* Teléfono +34 con saneo y validación */
-  const telInput = document.getElementById('telefono');
-  const telHelp  = document.getElementById('telefono-help');
-  const PREFIX = '+34';
-  function showTelError(msg){telHelp.textContent=msg;telHelp.style.display='block'}
-  function hideTelError(){telHelp.style.display='none'}
-  function sanitizePhone(v){
-    v=String(v||'').replace(/\s+/g,'');
-    if(v.startsWith('+')) v='+'+v.slice(1).replace(/\D+/g,''); else v=v.replace(/\D+/g,'');
-    if(!v.startsWith(PREFIX)) v=PREFIX+v.replace(/^\+?34/,'');
-    return v;
-  }
-  function validSpanishMobile(v){return /^\+34\d{9}$/.test(String(v||''))}
-  telInput.value = PREFIX; hideTelError();
-  telInput.addEventListener('focus',()=>{if(!telInput.value||telInput.value==='+') telInput.value=PREFIX});
-  telInput.addEventListener('beforeinput',e=>{
-    const selStart=telInput.selectionStart;
-    const del=(e.inputType==='deleteContentBackward'||e.inputType==='deleteContentForward');
-    if(del&&selStart<=PREFIX.length){e.preventDefault();showTelError('Solo teléfonos españoles (+34) con 9 dígitos.')}
-  });
-  telInput.addEventListener('input',()=>{
-    const prev=telInput.value, sanitized=sanitizePhone(prev);
-    if(prev!==sanitized){
-      const pos=telInput.selectionStart; telInput.value=sanitized;
-      if(pos<PREFIX.length) telInput.setSelectionRange(PREFIX.length,PREFIX.length);
-    }
-    if(telInput.value.length>PREFIX.length&&!validSpanishMobile(telInput.value)){
-      showTelError('Formato esperado: +34 y 9 dígitos. Ej: +34961111222');
-    } else hideTelError();
-  });
-  telInput.addEventListener('blur',()=>{
-    if(telInput.value===PREFIX){showTelError('Introduce tu número español con 9 dígitos tras +34.')}
-    else if(!validSpanishMobile(telInput.value)){showTelError('Teléfono inválido: +34 y 9 dígitos.')}
-    else hideTelError();
-  });
-
-  // Animación iconos envío
-  const icons=[document.getElementById('icon1'),document.getElementById('icon2'),document.getElementById('icon3')];
-  let indexIcon=0;
-  setInterval(()=>{
-    icons.forEach(i=>i&&i.classList.remove('active'));
-    if(icons[indexIcon]) icons[indexIcon].classList.add('active');
-    indexIcon=(indexIcon+1)%icons.length;
-  },1000);
-
-  // Fecha estimada hoy+5
-  const fechaElem=document.getElementById('fecha');
-  const meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  const hoy=new Date(); hoy.setDate(hoy.getDate()+5);
-  if(fechaElem) fechaElem.textContent=`${hoy.getDate()} de ${meses[hoy.getMonth()]}`;
-
-  /* ---------- FINALIZAR PEDIDO: Stripe Token -> pagos.php -> Zapier ---------- */
   async function finalizarPedido(){
     const btn = document.querySelector('.btn-finalizar');
     const original = btn.textContent;
@@ -321,7 +245,7 @@
         console.info('Stripe token creado:', tokenId);
 
         // 2) Llamar a tu pagos.php para ejecutar el cobro real
-        const endpoint = 'https://imanager.es/recursos/pagos.php';
+        const endpoint = 'https://imanagers.es/recursos/pagos.php'; // 👈 corregido con la "s"
 
         const payload = {
           token: tokenId,
@@ -430,6 +354,7 @@
 
   window.finalizarPedido = finalizarPedido;
 </script>
+
 
 
 
