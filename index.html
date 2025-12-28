@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>SUP Gummies de Vinagre de Manzana – Apoyo Digestivo y Energía Natural</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #e63946;
+      --red-dark:#c72232;
+      --green:#4caf50;
+      --orange:#f77f00;
+      --blue:#005f73;
+      --beige:#fff7e0;
+      --dark:#222;
+      --light:#fff;
+      --shadow:0 6px 18px rgba(0,0,0,.12);
+      --radius:14px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      font-family:"Montserrat",system-ui,-apple-system,blinkmacsystemfont,"Segoe UI",sans-serif;
+      color:#333;
+      background:#f3f5f7;
+      line-height:1.6;
+    }
+    img{max-width:100%;display:block;}
+    a{text-decoration:none;color:inherit;}
+    .page{
+      max-width:980px;
+      margin:0 auto;
+      background:#fff;
+      box-shadow:0 0 0 1px #e7ecf0;
+    }
+
+    /* BARRA SUPERIOR */
+    .top-bar{
+      background:var(--blue);
+      color:#fff;
+      text-align:center;
+      padding:.35rem .5rem;
+      font-size:.78rem;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:.6rem;
+      flex-wrap:wrap;
+    }
+    .top-bar span{display:flex;align-items:center;gap:.3rem;}
+    .top-bar strong{color:#ffdd57;}
+
+    /* HERO */
+    header.hero{
+      padding:1.5rem 1.1rem 2rem;
+      background:linear-gradient(135deg,#ffe8e8,#fff7e7);
+    }
+    .hero-inner{
+      display:grid;
+      grid-template-columns: minmax(0,1.1fr) minmax(0,1fr);
+      gap:1.7rem;
+      align-items:center;
+    }
+    .badge-offer{
+      display:inline-flex;
+      align-items:center;
+      gap:.3rem;
+      padding:.2rem .55rem;
+      background:#fff;
+      border-radius:999px;
+      box-shadow:0 2px 6px rgba(0,0,0,.06);
+      font-size:.72rem;
+      margin-bottom:.4rem;
+    }
+    .badge-offer span{
+      background:var(--red);
+      color:#fff;
+      border-radius:999px;
+      padding:.1rem .45rem;
+      font-weight:700;
+    }
+    .hero-title{
+      font-size:1.45rem;
+      font-weight:700;
+      color:var(--dark);
+      margin-bottom:.4rem;
+    }
+    .hero-subtitle{
+      font-size:.9rem;
+      color:#555;
+      margin-bottom:.75rem;
+    }
+    .hero-bullets{
+      list-style:none;
+      margin-bottom:1rem;
+    }
+    .hero-bullets li{
+      font-size:.85rem;
+      display:flex;
+      align-items:flex-start;
+      gap:.45rem;
+      margin-bottom:.35rem;
+    }
+    .hero-bullets li span{
+      margin-top:.12rem;
+      font-size:.9rem;
+    }
+    .price-row{
+      display:flex;
+      align-items:flex-end;
+      gap:.8rem;
+      margin-bottom:.6rem;
+      flex-wrap:wrap;
+    }
+    .price-main{
+      font-size:1.75rem;
+      font-weight:800;
+      color:var(--red-dark);
+    }
+    .price-old{
+      font-size:.85rem;
+      text-decoration:line-through;
+      color:#999;
+    }
+    .sku-stock{
+      font-size:.78rem;
+      color:#555;
+    }
+    .stock-pill{
+      background:#e9f8ec;
+      color:var(--green);
+      padding:.15rem .5rem;
+      border-radius:999px;
+      font-weight:600;
+      margin-left:.35rem;
+    }
+    .cta-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.45rem;
+      padding:.85rem 1.6rem;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--red),var(--orange));
+      color:#fff;
+      font-weight:700;
+      font-size:.9rem;
+      border:none;
+      cursor:pointer;
+      box-shadow:var(--shadow);
+      transition:transform .1s ease,box-shadow .1s ease,opacity .2s;
+    }
+    .cta-btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 10px 24px rgba(0,0,0,.25);
+      opacity:.98;
+    }
+    .cta-subtext{
+      font-size:.7rem;
+      color:#666;
+      margin-top:.35rem;
+    }
+    .trust-row{
+      display:flex;
+      gap:.75rem;
+      flex-wrap:wrap;
+      margin-top:1rem;
+      font-size:.68rem;
+    }
+    .trust-badge{
+      display:flex;
+      align-items:center;
+      gap:.3rem;
+      background:#fff;
+      padding:.25rem .55rem;
+      border-radius:999px;
+      box-shadow:0 2px 5px rgba(0,0,0,.06);
+    }
+    .hero-img-card{
+      background:#fff;
+      padding:.75rem;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .timer-box{
+      margin-top:.7rem;
+      font-size:.75rem;
+      background:#fff1e6;
+      border-radius:var(--radius);
+      padding:.5rem .7rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:.5rem;
+    }
+    .timer{
+      font-weight:700;
+      color:var(--red-dark);
+    }
+
+    /* SECCIONES GENÉRICAS */
+
+    .section-label{
+      background:var(--orange);
+      color:#fff;
+      text-align:center;
+      padding:.45rem;
+      font-size:.78rem;
+      font-weight:600;
+      letter-spacing:.03em;
+      text-transform:uppercase;
+    }
+    .section-label--blue{background:var(--blue);}
+    .section-label--green{background:var(--green);}
+    .section-label--dark{background:#222;}
+    .section{
+      padding:1.4rem 1.1rem;
+      background:#fff;
+      border-top:1px solid #edf1f5;
+    }
+    .section-alt{
+      background:var(--beige);
+    }
+    .section h2{
+      font-size:1.1rem;
+      margin-bottom:.6rem;
+      color:#222;
+    }
+    .section p{
+      font-size:.86rem;
+      margin-bottom:.5rem;
+      color:#444;
+    }
+
+    .two-cols{
+      display:grid;
+      grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
+      gap:1.4rem;
+      align-items:center;
+    }
+    .pill-list{
+      list-style:none;
+      display:grid;
+      gap:.4rem;
+      font-size:.83rem;
+    }
+    .pill-list li{
+      background:#fff;
+      border-radius:999px;
+      padding:.4rem .7rem;
+      box-shadow:0 1px 4px rgba(0,0,0,.06);
+      display:flex;
+      align-items:center;
+      gap:.4rem;
+    }
+    .pill-icon{
+      width:22px;
+      height:22px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#ffe3ec;
+      font-size:.8rem;
+    }
+
+    /* BENEFICIOS CARDS */
+    .benefits-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:.9rem;
+      margin-top:.8rem;
+    }
+    .benefit-card{
+      background:#fff;
+      border-radius:var(--radius);
+      padding:.9rem .8rem;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);
+      font-size:.8rem;
+    }
+    .benefit-icon{
+      font-size:1.2rem;
+      margin-bottom:.25rem;
+    }
+    .benefit-title{
+      font-weight:700;
+      margin-bottom:.25rem;
+      font-size:.86rem;
+      color:#222;
+    }
+
+    /* COMPARACIÓN */
+    .compare-table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:.8rem;
+      margin-top:.8rem;
+    }
+    .compare-table th,
+    .compare-table td{
+      border:1px solid #dde2ea;
+      padding:.4rem .45rem;
+      text-align:center;
+    }
+    .compare-table th{
+      background:#f4f6fb;
+      font-weight:600;
+    }
+    .compare-table td:first-child,
+    .compare-table th:first-child{
+      text-align:left;
+      font-weight:600;
+      background:#fafbff;
+    }
+    .check{color:var(--green);font-weight:700;}
+    .cross{color:#c0392b;font-weight:700;}
+
+    /* RESEÑAS */
+    .reviews-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:.8rem;
+      margin-top:.8rem;
+      font-size:.8rem;
+    }
+    .review-card{
+      background:#fff;
+      border-radius:var(--radius);
+      padding:.7rem .7rem .8rem;
+      box-shadow:0 2px 8px rgba(0,0,0,.07);
+      position:relative;
+    }
+    .review-name{
+      font-weight:600;
+      margin-bottom:.15rem;
+      font-size:.82rem;
+    }
+    .stars{
+      color:#ffb400;
+      margin-bottom:.25rem;
+      font-size:.83rem;
+    }
+    .verified{
+      font-size:.7rem;
+      color:#2e7d32;
+      margin-bottom:.25rem;
+    }
+    .review-tag{
+      position:absolute;
+      top:.45rem;
+      right:.55rem;
+      font-size:.65rem;
+      background:#e3f2fd;
+      padding:.1rem .4rem;
+      border-radius:999px;
+    }
+
+    /* MODO DE USO / PASOS */
+    .steps{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:.9rem;
+      margin-top:.8rem;
+      font-size:.8rem;
+    }
+    .step{
+      background:#fff;
+      border-radius:var(--radius);
+      padding:.8rem .75rem;
+      text-align:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);
+    }
+    .step-num{
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      border:2px solid var(--red);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0 auto .25rem;
+      font-weight:700;
+      font-size:.8rem;
+      color:var(--red);
+    }
+    .step-title{
+      font-weight:700;
+      margin-bottom:.2rem;
+      font-size:.83rem;
+    }
+
+    /* FAQ */
+    .faq-list{margin-top:.8rem;}
+    .faq-item{
+      border-radius:var(--radius);
+      background:#fff;
+      margin-bottom:.45rem;
+      box-shadow:0 1px 3px rgba(0,0,0,.06);
+      overflow:hidden;
+    }
+    .faq-q{
+      padding:.65rem .8rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      cursor:pointer;
+      font-size:.82rem;
+      font-weight:600;
+    }
+    .faq-q span{flex:1;}
+    .faq-toggle{
+      margin-left:.6rem;
+      font-weight:700;
+      font-size:1rem;
+      color:var(--red);
+    }
+    .faq-a{
+      padding:0 .8rem .65rem;
+      font-size:.8rem;
+      border-top:1px solid #eee;
+      display:none;
+    }
+    .faq-item.open .faq-a{display:block;}
+    .faq-item.open .faq-toggle{transform:rotate(45deg);}
+
+    /* VSL */
+    .video-wrapper{
+      position:relative;
+      padding-top:56.25%;
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      margin-top:.8rem;
+    }
+    .video-wrapper iframe{
+      position:absolute;
+      top:0;left:0;width:100%;height:100%;border:0;
+    }
+
+    .guarantee-box{
+      background:#fff;
+      border-radius:var(--radius);
+      padding:1rem .9rem;
+      box-shadow:var(--shadow);
+      font-size:.82rem;
+    }
+
+    .footer-cta{
+      text-align:center;
+      margin-top:1rem;
+    }
+
+    /* STICKY CTA INFERIOR */
+    .sticky-cta{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      background:#fff;
+      box-shadow:0 -4px 12px rgba(0,0,0,.15);
+      padding:.4rem .9rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:.7rem;
+      z-index:99;
+      transform:translateY(100%);
+      transition:transform .25s ease;
+    }
+    .sticky-cta.show{transform:translateY(0);}
+    .sticky-price{
+      font-size:.9rem;
+    }
+    .sticky-price strong{
+      color:var(--red-dark);
+      font-size:1.05rem;
+    }
+    .sticky-cta button{
+      padding:.55rem 1.4rem;
+      font-size:.8rem;
+      box-shadow:none;
+    }
+
+    footer{
+      padding:1rem 1.1rem 1.6rem;
+      background:#0b1724;
+      color:#e1e5eb;
+      font-size:.72rem;
+      text-align:center;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width:768px){
+      .hero-inner,
+      .two-cols{
+        grid-template-columns:1fr;
+      }
+      .benefits-grid,
+      .reviews-grid,
+      .steps{
+        grid-template-columns:1fr;
+      }
+      .page{box-shadow:none;}
+      header.hero{padding:1.1rem .85rem 1.4rem;}
+      .section{padding:1.1rem .85rem;}
+      .sticky-cta{padding:.45rem .7rem;}
+    }
+    @media (max-width:480px){
+      .hero-title{font-size:1.15rem;}
+      .price-main{font-size:1.5rem;}
+    }
+
+
+    /* SECCIÓN 60 GAMITAS DELICIOSAS */
+.section-gummies {
+  background: var(--beige);
+}
+
+.gummies-cols {
+  align-items: center;
+}
+
+.gummies-copy h2 {
+  font-size: 1.1rem;
+  margin-bottom: .5rem;
+  color: #222;
+}
+
+.gummies-copy p {
+  font-size: .86rem;
+  margin-bottom: .45rem;
+  color: #444;
+}
+
+/* Lista de bullets específica de esta sección (reusa pill-list si ya existe) */
+.gummies-list {
+  margin-top: .4rem;
+}
+
+/* Contenedor del vídeo */
+.gummies-video-wrapper {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: #000;
+}
+
+/* Vídeo responsive ocupando todo el contenedor */
+.gummies-video-wrapper video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* Responsive: asegura que el vídeo se vea bien cuando las columnas se apilen */
+@media (max-width: 768px) {
+  .gummies-video-wrapper {
+    max-width: 420px;
+    margin: 1rem auto 0;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- BARRA SUPERIOR -->
+  <div class="top-bar">
+    <span>⭐ <strong>OFERTA WEB EXCLUSIVA</strong></span>
+    <span>Envíos 24/48h · Pago 100% seguro</span>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero" id="inicio">
+    <div class="hero-inner">
+      <div>
+        <div class="badge-offer">
+          <span>-20%</span> Solo hoy: pack SUP Gummies de Vinagre de Manzana
+        </div>
+        <h1 class="hero-title">
+          SUP Gummies de Vinagre de Manzana – Apoyo Digestivo y Energía Natural
+        </h1>
+        <p class="hero-subtitle">
+          Las gominolas veganas que concentran los beneficios del vinagre de manzana
+          sin su sabor intenso. Cuida tu digestión, tu energía y tu corazón… con sabor a manzana.
+        </p>
+        <ul class="hero-bullets">
+          <li><span>🍏</span>Apoyo a la digestión y sensación de ligereza después de las comidas.</li>
+          <li><span>❤️</span>Ingredientes con acción antioxidante que protegen tus células del estrés oxidativo.</li>
+          <li><span>🩺</span>Formulado para apoyar niveles saludables de colesterol y bienestar cardiovascular.</li>
+          <li><span>🌿</span>Fórmula vegana, sin azúcares añadidos innecesarios, ideal para uso diario.</li>
+        </ul>
+
+        <div class="price-row">
+          <div>
+            <div class="price-main">34,99€</div>
+            <div class="price-old">Antes 44,99€</div>
+          </div>
+          <div class="sku-stock">
+            SKU: <strong>SUPL-GOMINOLAACV6006155</strong><br>
+            Stock: <span class="stock-pill">Disponible · Últimos Packs Disponibles</span>
+          </div>
+        </div>
+
+        <button class="cta-btn js-scroll-cta">
+          👉 QUIERO MIS GUMMIES
+        </button>
+        <div class="cta-subtext">Paga de forma segura · Envíos rápidos desde España</div>
+
+        <div class="trust-row">
+          <div class="trust-badge">🔒 Pago seguro SSL</div>
+          <div class="trust-badge">🚚 Envío 24/48h</div>
+          <div class="trust-badge">⭐ Más de 1.000 clientes felices</div>
+        </div>
+
+        <div class="timer-box">
+          <div>Precio especial disponible durante:</div>
+          <div class="timer" id="timer">15:00</div>
+        </div>
+      </div>
+
+      <div class="hero-img-card">
+        <!-- Cambia la ruta de la imagen por la tuya -->
+        <img src="https://i.postimg.cc/d3VpSKVy/cd83bc78-13b7-4162-b395-9674008d1aba.png"
+             alt="SUP Gummies de Vinagre de Manzana">
+      </div>
+    </div>
+  </header>
+
+  <!-- STORYTELLING -->
+  <div class="section-label section-label--orange">La historia detrás de SUP Gummies</div>
+  <section class="section section-alt" id="story">
+    <div class="two-cols">
+      <div>
+        <h2>De “me repite todo” a “por fin me siento ligera”</h2>
+        <p>
+          Si después de las comidas notas pesadez, hinchazón o simplemente sientes que tu
+          digestión va muy lenta, no estás sola. Nuestro equipo de nutrición buscó una forma
+          sencilla y agradable de incorporar el vinagre de manzana a la rutina diaria sin tener
+          que beberlo directamente.
+        </p>
+        <p>
+          Así nacen las <strong>SUP Gummies de Vinagre de Manzana</strong>: un suplemento
+          antioxidante en formato gominola, formulado para apoyar niveles saludables de colesterol,
+          contribuir al bienestar cardiovascular y proteger las células del estrés oxidativo.
+        </p>
+        <p>
+          Todo ello con un delicioso <strong>sabor manzana</strong>, fácil de tomar y perfecto para
+          quienes quieren cuidarse sin complicaciones.
+        </p>
+      </div>
+      <div>
+        <ul class="pill-list">
+          <li><div class="pill-icon">💡</div><span>Inspiradas en el uso tradicional del vinagre de manzana para la digestión.</span></li>
+          <li><div class="pill-icon">🧪</div><span>Formulación pensada para uso regular como ayuda nutricional integral.</span></li>
+          <li><div class="pill-icon">🍬</div><span>Formato gominola: práctico, sabroso y fácil de recordar cada día.</span></li>
+          <li><div class="pill-icon">🌱</div><span>Ingredientes de origen natural, apto para estilo de vida equilibrado.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- VSL -->
+  <div class="section-label section-label--blue">Mira cómo funcionan</div>
+  <section class="section" id="video">
+    <h2>VSL · Descubre SUP Gummies en 2 minutos</h2>
+    <p>
+      Dale al play y conoce por qué cada vez más personas cambian el vinagre de manzana líquido por nuestras gominolas.
+    </p>
+   <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
+ padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+ border-radius: 8px; will-change: transform;">
+  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+    src="https://www.canva.com/design/DAG81oI4pxs/qjMYgcjhYSsgFeJnnceaaw/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+  </iframe>
+</div>
+
+  </section>
+
+  <!-- BENEFICIOS -->
+  <div class="section-label section-label--green">Beneficios principales</div>
+  <section class="section section-alt" id="beneficios">
+    <h2>¿Qué hace especiales a las SUP Gummies de Vinagre de Manzana?</h2>
+    <p>
+      No son solo unas gominolas ricas: son un <strong>suplemento nutricional antioxidante</strong>
+      diseñado para apoyar tu salud desde dentro.
+    </p>
+
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🍏</div>
+        <div class="benefit-title">Apoyo digestivo diario</div>
+        <p>
+          Toma tus gummies junto con las comidas para ayudar a tu organismo a procesar mejor los alimentos.
+        </p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">❤️</div>
+        <div class="benefit-title">Bienestar cardiovascular</div>
+        <p>
+          Formulada para favorecer el equilibrio de lípidos en sangre y apoyar niveles saludables de colesterol.
+        </p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🛡️</div>
+        <div class="benefit-title">Acción antioxidante</div>
+        <p>
+          Sus ingredientes contribuyen a la <strong>protección celular frente al estrés oxidativo</strong>.
+        </p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">⚡</div>
+        <div class="benefit-title">Energía más estable</div>
+        <p>
+          Combínalas con una alimentación equilibrada para ayudar a evitar bajones de energía tras las comidas.
+        </p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🌱</div>
+        <div class="benefit-title">Veganas y fáciles de tomar</div>
+        <p>
+          Sin necesidad de tragar cápsulas grandes ni soportar el sabor fuerte del vinagre líquido.
+        </p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📆</div>
+        <div class="benefit-title">Perfectas para tu rutina</div>
+        <p>
+          Pensadas para uso regular como <strong>ayuda nutricional integral</strong>, día tras día.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESPECIFICACIONES -->
+  <div class="section-label">Especificaciones del producto</div>
+  <section class="section" id="especificaciones">
+    <div class="two-cols">
+      <div>
+        <h2>Ficha rápida</h2>
+        <p><strong>Tipo:</strong> Suplemento alimenticio antioxidante para lípidos.</p>
+        <p><strong>Objetivo:</strong> Apoyar niveles saludables de colesterol y bienestar cardiovascular.</p>
+        <p><strong>Formato:</strong> Gominolas de vinagre de manzana con delicioso sabor manzana.</p>
+        <p><strong>Modo de uso:</strong> Toma diaria junto con comidas, dentro de un estilo de vida equilibrado.</p>
+      </div>
+      <div>
+        <ul class="pill-list">
+          <li><div class="pill-icon">✅</div><span>Ideal como complemento diario en tu rutina de cuidado personal.</span></li>
+          <li><div class="pill-icon">✅</div><span>Puede combinarse con otros hábitos saludables (ejercicio, buena alimentación, descanso).</span></li>
+          <li><div class="pill-icon">✅</div><span>Diseñado para quienes buscan una ayuda extra en su salud cardiovascular.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARACIÓN -->
+  <div class="section-label section-label--blue">¿Por qué elegir SUP Gummies?</div>
+  <section class="section section-alt" id="comparacion">
+    <h2>Comparación con otras opciones</h2>
+    <p>
+      El vinagre de manzana es conocido por sus beneficios, pero no todas las formas de tomarlo son igual de cómodas.
+    </p>
+    <table class="compare-table">
+      <tr>
+        <th></th>
+        <th>SUP Gummies Vinagre de Manzana</th>
+        <th>Vinagre de manzana líquido</th>
+        <th>Otras gominolas genéricas</th>
+      </tr>
+      <tr>
+        <td>Sabor agradable</td>
+        <td class="check">✔</td>
+        <td class="cross">✖ Sabor intenso</td>
+        <td>Depende de la marca</td>
+      </tr>
+      <tr>
+        <td>Fácil de tomar cada día</td>
+        <td class="check">✔ Formato práctico</td>
+        <td>Requiere diluir y medir</td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <td>Apoyo específico a colesterol</td>
+        <td class="check">✔ Fórmula pensada para lípidos</td>
+        <td>Variable según la cantidad</td>
+        <td class="cross">✖ No siempre formuladas para ello</td>
+      </tr>
+      <tr>
+        <td>Acción antioxidante</td>
+        <td class="check">✔ Incluye ingredientes antioxidantes</td>
+        <td>Propio del vinagre</td>
+        <td>Depende de la formulación</td>
+      </tr>
+      <tr>
+        <td>Fácil de llevar contigo</td>
+        <td class="check">✔ Envase cómodo</td>
+        <td class="cross">✖ Botella de cristal</td>
+        <td>✔</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- MODO DE USO -->
+  <div class="section-label section-label--green">Cómo usar tus gummies</div>
+  <section class="section" id="modo-de-uso">
+    <h2>Incorpora SUP Gummies a tu día a día</h2>
+    <p>
+      Mantener una rutina es clave para notar resultados. Así de sencillo es usar este suplemento:
+    </p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Elige tu momento</div>
+        <p>Escoge una comida principal (desayuno, comida o cena) para tomar tus gummies cada día.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Toma la dosis indicada</div>
+        <p>Sigue las recomendaciones del envase para una toma adecuada y constante.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Sé constante</div>
+        <p>Combina su uso con una dieta equilibrada, movimiento diario y descanso de calidad.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ETIQUETA SUPERIOR -->
+<div class="section-label section-label--orange">60 gamitas deliciosas</div>
+
+<!-- SECCIÓN 60 GAMITAS -->
+<section class="section section-alt section-gummies" id="gummies">
+  <div class="two-cols gummies-cols">
+    <div class="gummies-copy">
+      <h2>Un frasco, 60 gamitas llenas de sabor</h2>
+      <p>
+        Cada frasco de <strong>SUP Gummies de Vinagre de Manzana</strong> contiene 
+        60 gominolas con delicioso sabor manzana, pensadas para acompañarte día a día.
+      </p>
+      <p>
+        Su formato práctico te permite llevarlas en el bolso, al trabajo o de viaje,
+        para que cuidar tu digestión y tu bienestar cardiovascular sea tan fácil
+        como tomar una gamita.
+      </p>
+      <ul class="pill-list gummies-list">
+        <li><div class="pill-icon">🍬</div><span>Textura suave y sabor manzana muy agradable.</span></li>
+        <li><div class="pill-icon">📦</div><span>60 unidades por frasco: perfectas para tu rutina.</span></li>
+        <li><div class="pill-icon">🚶‍♀️</div><span>Ideales para llevar y tomar en cualquier lugar.</span></li>
+      </ul>
+    </div>
+
+    <div class="gummies-video-wrapper">
+      <video 
+        src="https://imanagers.es/recursos/vinagre.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+      ></video>
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- RESEÑAS -->
+  <div class="section-label">Lo que dicen quienes ya las usan</div>
+  <section class="section section-alt" id="reseñas">
+    <h2>Reseñas reales de clientes</h2>
+    <p>
+      Estas opiniones son de personas que han incorporado SUP Gummies de Vinagre de Manzana a su rutina diaria.
+    </p>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-tag">Digestión</div>
+        <div class="review-name">María G.</div>
+        <div class="stars">★★★★★</div>
+        <div class="verified">✔ Compra verificada</div>
+        <p>
+          “Llevaba tiempo queriendo tomar vinagre de manzana pero no soportaba el sabor.
+          Con estas gominolas lo tengo fácil y noto la digestión mucho más ligera.”
+        </p>
+      </div>
+      <div class="review-card">
+        <div class="review-tag">Rutina diaria</div>
+        <div class="review-name">Sergio L.</div>
+        <div class="stars">★★★★☆</div>
+        <div class="verified">✔ Compra verificada</div>
+        <p>
+          “Las tomo cada mañana con el desayuno. Siento menos pesadez y más energía durante el día.
+          El sabor está muy conseguido.”
+        </p>
+      </div>
+      <div class="review-card">
+        <div class="review-tag">Bienestar</div>
+        <div class="review-name">Ana P.</div>
+        <div class="stars">★★★★★</div>
+        <div class="verified">✔ Compra verificada</div>
+        <p>
+          “Me gusta porque es un apoyo extra a mi alimentación. Saber que ayuda al colesterol y al corazón me da tranquilidad.”
+        </p>
+      </div>
+      <div class="review-card">
+        <div class="review-tag">Prácticas</div>
+        <div class="review-name">Raúl D.</div>
+        <div class="stars">★★★★★</div>
+        <div class="verified">✔ Compra verificada</div>
+        <p>
+          “Me las llevo al trabajo y no se me olvida tomarlas. Mucho más cómodo que el vinagre líquido.”
+        </p>
+      </div>
+      <div class="review-card">
+        <div class="review-tag">Sabor</div>
+        <div class="review-name">Lucía V.</div>
+        <div class="stars">★★★★☆</div>
+        <div class="verified">✔ Compra verificada</div>
+        <p>
+          “Soy muy tiquismiquis con los sabores y estas me encantan. Ya voy por el segundo frasco.”
+        </p>
+      </div>
+      <div class="review-card">
+        <div class="review-tag">Constancia</div>
+        <div class="review-name">Pablo R.</div>
+        <div class="stars">★★★★★</div>
+        <div class="verified">✔ Compra verificada</div>
+        <p>
+          “Por fin un suplemento que no me cuesta tomar. Cuando algo sabe bien, ser constante es mucho más fácil.”
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="section-label section-label--blue">Preguntas frecuentes</div>
+  <section class="section" id="faq">
+    <h2>¿Tienes dudas? Aquí las resolvemos</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>¿Cuántas gominolas debo tomar al día?</span>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">
+          Sigue siempre las indicaciones de la etiqueta del producto. Como regla general,
+          se recomienda una toma diaria junto con una de tus comidas principales.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>¿Puedo tomarlas si ya uso otros suplementos?</span>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">
+          En la mayoría de los casos se pueden combinar, pero si estás tomando medicación
+          o tienes alguna condición médica, consulta antes con un profesional de la salud.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>¿Reemplazan una alimentación saludable?</span>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">
+          No. SUP Gummies de Vinagre de Manzana son un complemento alimenticio que
+          <strong>apoya</strong> tu bienestar, pero no sustituyen una dieta equilibrada ni un estilo de vida saludable.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>¿Son aptas para veganos?</span>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">
+          Sí, la formulación está pensada para ser compatible con un estilo de vida vegano.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>¿Cuánto tiempo tarda en llegar mi pedido?</span>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">
+          Los envíos se realizan normalmente en <strong>24/48h laborables</strong> desde que se confirma el pago.
+          Te avisaremos por email con el seguimiento.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GARANTÍA + CTA -->
+  <div class="section-label section-label--dark">Tu próximo paso</div>
+  <section class="section section-alt" id="comprar">
+    <div class="two-cols">
+      <div>
+        <h2>Empieza hoy a cuidar tu digestión y tu bienestar cardiovascular</h2>
+        <p>
+          Una pequeña acción diaria puede marcar la diferencia en cómo te sientes por dentro.
+          SUP Gummies de Vinagre de Manzana te lo ponen fácil: sabor agradable, uso sencillo y
+          formulación pensada para apoyar tu salud.
+        </p>
+        <div class="guarantee-box">
+          <strong>Garantía de satisfacción</strong><br><br>
+          Si tu pedido llega dañado o con cualquier incidencia, nuestro equipo de atención al
+          cliente la resolverá contigo. Queremos que tu experiencia sea tan buena como el producto.
+        </div>
+      </div>
+      <div class="footer-cta">
+        <div class="price-main" style="margin-bottom:.1rem;">34,99€</div>
+        <div class="price-old">Antes 44,99€</div>
+        <p style="font-size:.78rem;margin:.45rem 0 1rem;">
+          SUP Gummies de Vinagre de Manzana – Apoyo Digestivo y Energía Natural <br>
+          <strong>Stock disponible: Últimos Packs Disponibles</strong>
+        </p>
+        <button class="cta-btn js-scroll-cta">QUIERO PROBARLAS AHORA</button>
+        <div class="cta-subtext" style="margin-top:.6rem;">
+          Haz tu pedido en menos de 1 minuto. Pago seguro, envío rápido.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Este producto es un complemento alimenticio y no debe utilizarse como sustituto de una dieta
+    variada y equilibrada ni de un estilo de vida saludable. Mantener fuera del alcance de los niños.
+    <br><br>
+    © <span id="year"></span> SUP · Todos los derechos reservados.
+  </footer>
+
+</div>
+
+<!-- STICKY CTA INFERIOR -->
+<div class="sticky-cta" id="stickyBar">
+  <div class="sticky-price">
+    SUP Gummies Vinagre de Manzana<br>
+    <strong>34,99€</strong> · Envío 24/48h
+  </div>
+  <button class="cta-btn js-scroll-cta">AÑADIR AL CARRITO</button>
+</div>
+
+<script>
+  // Cuenta atrás simple (15 minutos)
+  (function(){
+    var totalSeconds = 15 * 60; // 15 minutos
+    var timerElement = document.getElementById('timer');
+
+    function updateTimer(){
+      var minutes = Math.floor(totalSeconds / 60);
+      var seconds = totalSeconds % 60;
+      timerElement.textContent =
+        String(minutes).padStart(2,'0') + ':' + String(seconds).padStart(2,'0');
+
+      if(totalSeconds > 0){
+        totalSeconds--;
+        setTimeout(updateTimer,1000);
+      }else{
+        timerElement.textContent = "¡Últimas unidades!";
+      }
+    }
+    updateTimer();
+  })();
+
+  // Scroll suave al bloque de compra
+  document.querySelectorAll('.js-scroll-cta').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.preventDefault();
+      var target = document.getElementById('comprar');
+      window.scrollTo({
+        top: target.offsetTop - 70,
+        behavior: 'smooth'
+      });
+    });
+  });
+
+  // Mostrar sticky CTA cuando se baja
+  (function(){
+    var sticky = document.getElementById('stickyBar');
+    function onScroll(){
+      if(window.scrollY > 550){
+        sticky.classList.add('show');
+      }else{
+        sticky.classList.remove('show');
+      }
+    }
+    window.addEventListener('scroll',onScroll);
+    onScroll();
+  })();
+
+  // FAQ acordeón
+  document.querySelectorAll('.faq-item').forEach(function(item){
+    item.querySelector('.faq-q').addEventListener('click',function(){
+      item.classList.toggle('open');
+    });
+  });
+
+  // Año actual en el footer
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+
+// Redirigir todos los botones principales al checkout
+document.addEventListener("DOMContentLoaded", function () {
+  const botones = document.querySelectorAll(".cta-btn, .js-scroll-cta");
+
+  botones.forEach(btn => {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      window.location.href = "checkout.html";
+    });
+  });
+});
+
+
+</script>
+
+<!-- Hotjar -->
+  <script>
+    (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)}
+      ;h._hjSettings={hjid:6388392,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+  </script>
+
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','1142663291345671'); fbq('track','PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1142663291345671&ev=PageView&noscript=1"></noscript>
+
+</body>
+</html>
